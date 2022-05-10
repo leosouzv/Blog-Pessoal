@@ -28,7 +28,7 @@ public class Tema {
 	//cascade serve para as atualizacoes sobre um tema surjam como uma noca postagem porem para o mesmo tema anterior.
 	@OneToMany(mappedBy="tema", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("tema")
-	private List<Postagem> postagem;
+	private List<Postagem>postagem;
 
 	public Long getId() {
 		return id;

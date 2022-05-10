@@ -1,6 +1,7 @@
 package com.generation.blogpessoal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,43 +18,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.generation.blogpessoal.model.Tema;
-import com.generation.blogpessoal.repository.TemaRepository;
+import com.generation.blogpessoal.model.Usuario;
+import com.generation.blogpessoal.repository.UsuarioRepository;
 
 @RestController
-@RequestMapping("/tema")
+@RequestMapping("/usuarios")
 @CrossOrigin("*")
-public class TemaController {
+public class UsuarioController {
 
-	// Responsabilidade de instanciação para o Spring
 	@Autowired
-	private TemaRepository repository;
-
+	private UsuarioRepository repository;
+	
 	@GetMapping
-	public List<Tema> getAll() {
+	public List<Usuario> getAll(){
 		return repository.findAll();
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<Tema> getById(@PathVariable Long id) {
-		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	@GetMapping("/usuario/{usuario}")
+	public ResponseEntity<Optional<Usuario>> getByTitulo(@PathVariable String usuario) {
+		return ResponseEntity.ok(repository.findByUsuario(usuario));
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<Tema> postTema(@Valid @RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
-
+	public ResponseEntity <Usuario> postPostagem(@Valid @RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
 	}
-
+	
 	@PutMapping
-	public ResponseEntity<Tema> putTema(@Valid @RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(tema));
-
+	public ResponseEntity <Usuario> putPostagem(@Valid @RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
 	}
-
+	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		repository.deleteById(id);
 	}
-
 }
