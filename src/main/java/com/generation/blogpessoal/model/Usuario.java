@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,7 +30,8 @@ public class Usuario {
 	private String usuario;
 
 	@NotNull
-	private String senha;
+	@Size(min = 8, max = 16, message = "A senha deve incluir no mínimo 8 caracteres e no máximo 16 caracteres")
+	private String senha; //caracteres especiais da erro
 
 	private String foto;
 

@@ -19,38 +19,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Usuario;
+import com.generation.blogpessoal.model.UsuarioLogin;
 import com.generation.blogpessoal.repository.UsuarioRepository;
+import com.generation.blogpessoal.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 
 	@Autowired
+	private UsuarioService usuarioService;
+
+	@Autowired
 	private UsuarioRepository repository;
-	
-	@GetMapping
-	public List<Usuario> getAll(){
+
+	@GetMapping("/all")
+	public List<Usuario> getAll() {
 		return repository.findAll();
 	}
-	
-	@GetMapping("/usuario/{usuario}")
-	public ResponseEntity<Optional<Usuario>> getByTitulo(@PathVariable String usuario) {
-		return ResponseEntity.ok(repository.findByUsuario(usuario));
+
+	@PostMapping("/logar")
+	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> user) {
+		return usuarioService.autenticaUsuario(user).map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
-	
-	@PostMapping
-	public ResponseEntity <Usuario> postPostagem(@Valid @RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Usuario> cadastro(@Valid @RequestBody Usuario usuario) {
+
+		return usuarioService.cadastraUsuario(usuario)
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
-	
+
 	@PutMapping
-	public ResponseEntity <Usuario> putPostagem(@Valid @RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
+	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		repository.deleteById(id);
+		repository.findById(id).map(resposta -> {
+			repository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			})
+			.orElse(ResponseEntity.notFound().build());
+
 	}
 }
