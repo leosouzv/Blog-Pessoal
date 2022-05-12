@@ -28,6 +28,15 @@ public class UsuarioService {
 		// salva a senha criptografada, dentro do banco de dados
 		return Optional.of(repository.save(usuario));
 	}
+	
+	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
+
+		repository.findById(usuario.getId()).isPresent();
+
+		usuario.setSenha(criptografarSenha(usuario.getSenha()));
+
+		return Optional.of(repository.save(usuario));
+	}
 
 	private String criptografarSenha(String senha) {
 

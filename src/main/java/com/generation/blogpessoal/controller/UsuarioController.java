@@ -53,9 +53,11 @@ public class UsuarioController {
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
-	@PutMapping
-	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
+	@PutMapping("/atualizar")
+	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
+		return usuarioService.atualizarUsuario(usuario)
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
 	@DeleteMapping("/{id}")
