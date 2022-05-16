@@ -27,13 +27,13 @@ public class UsuarioRepositoryTest {
 
 	@BeforeAll
 	public void star() {
-		repository.save(new Usuario(0L, "Leozin", "leo@gmail.com", "12345abc", "https://imgur.com/wGkJQA4"));
+		repository.save(new Usuario(0L, "Leozin", "leo@gmail.com", "12345abc"));
 
-		repository.save(new Usuario(0L, "Maiara", "maiara@gmail.com", "12345678", "https://imgur.com/Etk55mD"));
+		repository.save(new Usuario(0L, "Maiara", "maiara@gmail.com", "12345678"));
 
-		repository.save(new Usuario(0L, "Julio", "julio@gmail.com", "abc12345", "https://imgur.com/Etk55mD"));
+		repository.save(new Usuario(0L, "Julio", "julio@gmail.com", "abc12345"));
 
-		repository.save(new Usuario(0L, "Neymar", "ney@gmail.com", "ney12345", "https://imgur.com/Etk55mD"));
+		repository.save(new Usuario(0L, "Neymar", "ney@gmail.com", "ney12345"));
 	}
 
 	@Test

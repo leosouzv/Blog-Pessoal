@@ -30,7 +30,6 @@ public class Usuario {
 	private String usuario;
 
 	@NotNull
-	@Size(min = 8, max = 16, message = "A senha deve incluir no mínimo 8 caracteres e no máximo 16 caracteres")
 	private String senha; //caracteres especiais da erro
 
 	private String foto;
@@ -41,12 +40,11 @@ public class Usuario {
 	
 	//ordem dos atributos do construtor tem que ser a mesma ordem da model
 	//construtor cheio
-	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+	public Usuario(Long id, String nome, String usuario, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.usuario = usuario;
 		this.senha = senha;
-		this.foto = foto;
 	}
 	
 	//construtor vazio
