@@ -29,7 +29,7 @@ public class TemaController {
 	@Autowired
 	private TemaRepository repository;
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<Tema> getAll() {
 		return repository.findAll();
 	}
@@ -39,19 +39,19 @@ public class TemaController {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
-	@PostMapping
+	@PostMapping("/novo_tema")
 	public ResponseEntity<Tema> postTema(@Valid @RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
 
 	}
-
-	@PutMapping
+	
+	@PutMapping("/atualizar")
 	public ResponseEntity<Tema> putTema(@Valid @RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(tema));
 
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/del/{id}")
 	public void delete(@PathVariable Long id) {
 		repository.deleteById(id);
 	}

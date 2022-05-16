@@ -34,7 +34,7 @@ public class PostagemController {
 	@Autowired
 	private PostagemRepository repository;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public List<Postagem> getAll() {
 		return repository.findAll();
 	}
@@ -44,13 +44,13 @@ public class PostagemController {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
-	@PostMapping
+	@PostMapping("/postar")
 	public ResponseEntity <Postagem> postPostagem(@Valid @RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 		
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity <Postagem> put(@Valid @RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 		
