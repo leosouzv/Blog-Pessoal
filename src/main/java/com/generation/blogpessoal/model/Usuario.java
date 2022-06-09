@@ -29,15 +29,16 @@ public class Usuario {
 
 	@NotNull(message = "Campo obrigatório")
 	@Schema(example = "email@email.com.br")
-	@Email(message = "O usuário deve inserir um e-mail válido")
+	@Email(message = "O usuário deve inserir um e-mail válido ex:joao@email.com")
 	private String usuario;
 
 	@NotNull
 	private String senha; //caracteres especiais da erro
 
 	private String foto;
+	
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem>postagem;
 	
